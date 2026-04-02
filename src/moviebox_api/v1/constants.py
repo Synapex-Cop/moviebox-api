@@ -62,14 +62,14 @@ DEFAULT_REQUEST_HEADERS = {
 }
 """For general http requests other than download"""
 
-DOWNLOAD_REQUEST_REFERER = "https://fmoviesunblocked.net/"
+DOWNLOAD_REQUEST_REFERER = HOST_URL
 
 DOWNLOAD_REQUEST_HEADERS = {
     "Accept": "*/*",  # "video/webm,video/ogg,video/*;q=0.9,application/ogg;q=0.7,
     # audio/*;q=0.6,*/*;q=0.5",
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 "
     "Firefox/137.0",
-    "Origin": SELECTED_HOST,
+    "Origin": f"{HOST_PROTOCOL}://{SELECTED_HOST}",
     "Referer": DOWNLOAD_REQUEST_REFERER,
 }
 """For media and subtitle files download requests"""
