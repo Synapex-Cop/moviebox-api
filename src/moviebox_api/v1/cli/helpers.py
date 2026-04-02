@@ -301,10 +301,9 @@ def stream_video_via_mpv(
             # Convert to absolute path for mpv compatibility
             subtitle_path = sub_file.saved_to.resolve().as_posix()
             mpv_cmd.append(f"--sub-file={subtitle_path}")
-            subtitle_added = True
-            if subtitle_added:
+            if not subtitle_added:
                 mpv_cmd.append("--sid=1")
-                subtitle_added = False
+                subtitle_added = True
 
         mpv_cmd.append(str(url))
 
