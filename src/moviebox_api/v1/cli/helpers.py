@@ -294,12 +294,17 @@ def stream_video_via_mpv(
         for header_name, header_value in DOWNLOAD_REQUEST_HEADERS.items():
             mpv_cmd.append(f"--http-header-fields={header_name}: {header_value}")
 
-        for index, sub_file in enumerate(subtitle_details_items):
-            if index == 0:
-                mpv_cmd.append("--sid=1")
+        subtitle_added = False
+        for sub_file in subtitle_details_items:
+            if not hasattr(sub_file, "saved_to"):
+                continue
             # Convert to absolute path for mpv compatibility
             subtitle_path = sub_file.saved_to.resolve().as_posix()
             mpv_cmd.append(f"--sub-file={subtitle_path}")
+            subtitle_added = True
+            if subtitle_added:
+                mpv_cmd.append("--sid=1")
+                subtitle_added = False
 
         mpv_cmd.append(str(url))
 
@@ -338,6 +343,8 @@ def stream_video_via_vlc(
         ]
 
         for sub_file in subtitle_details_items:
+            if not hasattr(sub_file, "saved_to"):
+                continue
             subtitle_path = sub_file.saved_to.resolve().as_posix()
             mpv_cmd.append(f"--sub-file={subtitle_path}")
 
